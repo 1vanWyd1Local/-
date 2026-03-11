@@ -244,41 +244,14 @@
   <script type="text/babel">
     const { useState, useEffect, useMemo, useRef } = React;
 
-    // Initial Data
-    const initialGroups = [
-      { id: 1, name: 'ИТ-21' },
-      { id: 2, name: 'ИТ-22' },
-      { id: 3, name: 'ЭК-21' },
-    ];
-    
-    const initialSubjects = [
-      { id: 1, name: 'Базы данных', groupId: 1 },
-      { id: 2, name: 'Программирование', groupId: 1 },
-      { id: 3, name: 'Математика', groupId: 2 },
-    ];
-
-    const initialStudents = [
-      { id: 1, name: 'Алексеев А.А.', groupId: 1 },
-      { id: 2, name: 'Борисов Б.Б.', groupId: 1 },
-      { id: 3, name: 'Васильев В.В.', groupId: 1 },
-      { id: 4, name: 'Григорьев Г.Г.', groupId: 1 },
-      { id: 5, name: 'Дмитриев Д.Д.', groupId: 1 },
-    ];
-
+    // Initial Data (Empty, no test accounts)
+    const initialGroups = [];
+    const initialSubjects = [];
+    const initialStudents = [];
     const initialSchedule = {};
     const initialBellSchedules = [];
     const initialNews = [];
     const initialMessages = [];
-
-    // Default Admin
-    const defaultAdmin = {
-      id: 999,
-      username: 'admin',
-      password: 'admin',
-      role: 'admin',
-      name: 'Администратор',
-      avatar: null
-    };
 
     const studentStatuses = {
       active: { label: 'Активен', color: 'status-active' },
@@ -318,15 +291,7 @@
       }
     };
 
-    const getUsers = () => {
-      let users = getFromStorage('users', []);
-      // Ensure admin exists
-      if (!users.find(u => u.username === 'admin')) {
-        users.push(defaultAdmin);
-        saveToStorage('users', users);
-      }
-      return users;
-    };
+    const getUsers = () => getFromStorage('users', []);
 
     const saveUser = (user) => {
       const users = getUsers();
@@ -357,93 +322,8 @@
       saveToStorage('portfolios', portfolios);
     };
 
-    // Landing Page Component
-    const LandingPage = ({ onLoginClick, onRegisterClick }) => {
-      return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col">
-          {/* Header */}
-          <header className="w-full px-6 py-4 flex justify-between items-center bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-            <div className="flex items-center gap-2">
-              <span className="text-3xl">📚</span>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Учебный Журнал
-              </h1>
-            </div>
-            <div className="flex gap-4">
-              <button 
-                onClick={onLoginClick}
-                className="px-6 py-2 rounded-full font-semibold text-blue-600 hover:bg-blue-50 transition-colors"
-              >
-                Войти
-              </button>
-              <button 
-                onClick={onRegisterClick}
-                className="px-6 py-2 rounded-full font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
-              >
-                Регистрация
-              </button>
-            </div>
-          </header>
-
-          {/* Hero Section */}
-          <main className="flex-1 flex flex-col items-center justify-center px-4 text-center py-20">
-            <div className="max-w-4xl animate-fade-in">
-              <span className="inline-block px-4 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-6">
-                🚀 Новая версия 2.0 уже доступна
-              </span>
-              <h2 className="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
-                Управление обучением <br/>
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  нового поколения
-                </span>
-              </h2>
-              <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                Единая платформа для преподавателей, студентов и администрации. 
-                Журнал оценок, расписание, чаты и аналитика в одном месте.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button 
-                  onClick={onLoginClick}
-                  className="px-8 py-4 rounded-xl font-bold text-lg bg-gray-900 text-white hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1"
-                >
-                  Начать работу
-                </button>
-                <button className="px-8 py-4 rounded-xl font-bold text-lg bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 shadow-md hover:shadow-lg transition-all">
-                  Узнать больше
-                </button>
-              </div>
-            </div>
-
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-24 w-full">
-              <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-                <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-3xl mb-4">📊</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Умный журнал</h3>
-                <p className="text-gray-600">Автоматический расчет среднего балла, посещаемости и экспорты в Excel.</p>
-              </div>
-              <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-                <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-3xl mb-4">💬</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Общение</h3>
-                <p className="text-gray-600">Встроенный чат для студентов и преподавателей. Личные и групповые беседы.</p>
-              </div>
-              <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-                <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-3xl mb-4">📅</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Расписание</h3>
-                <p className="text-gray-600">Гибкое составление расписания с привязкой к аудиториям и звонкам.</p>
-              </div>
-            </div>
-          </main>
-
-          <footer className="w-full py-6 text-center text-gray-500 text-sm bg-white/50">
-            © 2024 Учебный Журнал Pro. Все права защищены.
-          </footer>
-        </div>
-      );
-    };
-
     // Login Component
-    const LoginPage = ({ onLogin, onBack }) => {
+    const LoginPage = ({ onLogin }) => {
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
       const [error, setError] = useState('');
@@ -462,12 +342,9 @@
       return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md animate-slide-in">
-            <button onClick={onBack} className="mb-4 text-gray-500 hover:text-gray-700 flex items-center gap-2">
-              ← На главную
-            </button>
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-800 mb-2">Вход в систему</h1>
-              <p className="text-gray-600">Добро пожаловать обратно</p>
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">📚 Учебный Журнал</h1>
+              <p className="text-gray-600">Система учета успеваемости</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -478,7 +355,7 @@
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Введите логин"
+                  placeholder="Введите имя пользователя"
                   required
                 />
               </div>
@@ -499,12 +376,13 @@
                 <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm animate-fade-in">{error}</div>
               )}
 
-              <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">Войти</button>
+              <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Войти</button>
             </form>
 
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-lg">
-              <p className="text-sm text-blue-800 font-semibold mb-1">Демо доступ:</p>
-              <p className="text-xs text-blue-600">Админ: admin / admin</p>
+            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-sm text-yellow-800">
+                ℹ️ Регистрация студентов доступна только через преподавателя. Обратитесь к администрации для создания аккаунта.
+              </p>
             </div>
           </div>
         </div>
@@ -512,7 +390,7 @@
     };
 
     // Register Component (Teachers only)
-    const RegisterPage = ({ onRegister, onBack }) => {
+    const RegisterPage = ({ onRegister, onShowLogin }) => {
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
       const [confirmPassword, setConfirmPassword] = useState('');
@@ -551,22 +429,19 @@
         };
 
         saveUser(newUser);
-        setSuccess('Регистрация успешна! Перенаправление на вход...');
+        setSuccess('Регистрация успешна! Теперь вы можете войти.');
         
         setTimeout(() => {
-          onBack();
+          onShowLogin();
         }, 1500);
       };
 
       return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md animate-slide-in">
-            <button onClick={onBack} className="mb-4 text-gray-500 hover:text-gray-700 flex items-center gap-2">
-              ← На главную
-            </button>
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">Регистрация преподавателя</h1>
-              <p className="text-gray-600">Создайте аккаунт для начала работы</p>
+              <p className="text-gray-600">Создайте аккаунт преподавателя</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -577,7 +452,7 @@
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                  placeholder="Иванов Иван Иванович"
+                  placeholder="Введите ваше ФИО"
                   required
                 />
               </div>
@@ -626,8 +501,92 @@
                 <div className="bg-green-50 text-green-600 px-4 py-3 rounded-lg text-sm animate-fade-in">{success}</div>
               )}
 
-              <button type="submit" className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg">Зарегистрироваться</button>
+              <button type="submit" className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">Зарегистрироваться</button>
             </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-600 mb-2">Уже есть аккаунт?</p>
+              <button onClick={onShowLogin} className="text-green-600 hover:text-green-800 font-semibold">Войти</button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // Sidebar Component
+    const Sidebar = ({ activeTab, setActiveTab, isTeacher, user, onLogout, onShowSettings, onShowSwitcher }) => {
+      const menuItems = [
+        { id: 'journal', label: 'Журнал', icon: '📖' },
+        { id: 'schedule', label: 'Расписание', icon: '📅' },
+        { id: 'chat', label: 'Чат', icon: '💬' },
+        { id: 'portfolio', label: 'Портфолио', icon: '👤' },
+        { id: 'news', label: 'Новости', icon: '📰' },
+      ];
+
+      if (isTeacher) {
+        menuItems.push({ id: 'management', label: 'Управление', icon: '⚙️' });
+        menuItems.push({ id: 'archive', label: 'Архив', icon: '🗄' });
+      }
+
+      return (
+        <div className="sidebar bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
+          <div className="p-6 border-b border-gray-100">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              📚 Учебный Журнал
+            </h1>
+            <div className="mt-4 flex items-center gap-3">
+              <div className="avatar-upload w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold shadow-md overflow-hidden">
+                {user.avatar ? (
+                  <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                ) : (
+                  user.name.charAt(0)
+                )}
+                <div className="avatar-overlay text-xs">📷</div>
+              </div>
+              <div className="overflow-hidden">
+                <p className="text-sm font-semibold text-gray-800 truncate">{user.name}</p>
+                <p className="text-xs text-gray-500 truncate">{user.role === 'teacher' ? 'Преподаватель' : 'Студент'}</p>
+              </div>
+            </div>
+          </div>
+
+          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+            {menuItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                  activeTab === item.id ? 'nav-item-active' : 'nav-item-inactive'
+                }`}
+              >
+                <span className="text-lg">{item.icon}</span>
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="p-4 border-t border-gray-100 space-y-2">
+            <button
+              onClick={onShowSettings}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"
+            >
+              <span className="text-lg">⚙️</span>
+              Настройки
+            </button>
+            <button
+              onClick={onShowSwitcher}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"
+            >
+              <span className="text-lg">🔄</span>
+              Сменить аккаунт
+            </button>
+            <button
+              onClick={onLogout}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-all"
+            >
+              <span className="text-lg">🚪</span>
+              Выйти
+            </button>
           </div>
         </div>
       );
@@ -895,7 +854,7 @@
       );
     };
 
-    // Add Student Modal (Teacher/Admin only)
+    // Add Student Modal (Teacher only)
     const AddStudentModal = ({ isOpen, onClose, onAdd, groups }) => {
       const [name, setName] = useState('');
       const [groupId, setGroupId] = useState('');
@@ -1030,7 +989,7 @@
       );
     };
 
-    // Add Subject Modal (Admin only for teacher assignment)
+    // Add Subject Modal (with teacher assignment)
     const AddSubjectModal = ({ isOpen, onClose, onAdd, groups, teachers }) => {
       const [subjectName, setSubjectName] = useState('');
       const [groupId, setGroupId] = useState('');
@@ -1924,7 +1883,7 @@
             setAttachedFile({
               name: file.name,
               type: file.type,
-               event.target.result,
+              data: event.target.result,
               size: file.size
             });
           };
@@ -2219,7 +2178,7 @@
             setNewFile({
               name: file.name,
               type: file.type,
-               event.target.result,
+              data: event.target.result,
               date: new Date().toLocaleDateString()
             });
           };
@@ -2463,8 +2422,8 @@
       );
     };
 
-    // Management Panel Component (Admin Only)
-    const ManagementPanel = ({ type, items, onAdd, onRemove, onUpdateStatus, groups, students, subjects, bellSchedules, teachers, onOpenBellSchedule, onOpenAddStudent, onOpenAddSubject, onAssignTeacher, onAssignCurator }) => {
+    // Management Panel Component
+    const ManagementPanel = ({ type, items, onAdd, onRemove, onUpdateStatus, groups, students, subjects, bellSchedules, teachers, onOpenBellSchedule, onOpenAddStudent }) => {
       const [isAdding, setIsAdding] = useState(false);
       const [newItemName, setNewItemName] = useState('');
       const [newItemGroup, setNewItemGroup] = useState('');
@@ -2501,8 +2460,6 @@
             </h3>
             {type === 'students' ? (
               <button onClick={onOpenAddStudent} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-colors text-sm shadow-md">+ Добавить студента</button>
-            ) : type === 'subjects' ? (
-              <button onClick={onOpenAddSubject} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-colors text-sm shadow-md">+ Добавить предмет</button>
             ) : type === 'bellSchedules' ? (
               <button onClick={onOpenBellSchedule} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-colors text-sm shadow-md">+ Добавить</button>
             ) : (
@@ -2560,7 +2517,7 @@
                     )}
                     {type === 'subjects' && item.teacherId && (
                       <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
-                        👨‍🏫 {teachers.find(t => t.id === item.teacherId)?.name || 'Не назначен'}
+                        👨‍🏫 {teachers.find(t => t.id === item.teacherId)?.name || 'Не указан'}
                       </span>
                     )}
                     {(type === 'students' || type === 'subjects') && item.groupId && (
@@ -2723,35 +2680,13 @@
       useEffect(() => { saveToStorage('news', news); }, [news]);
       useEffect(() => { saveToStorage('subjectGradeColumns', subjectGradeColumns); }, [subjectGradeColumns]);
 
-      const isAdmin = user.role === 'admin';
-      const isTeacher = user.role === 'teacher';
+      const isTeacher = user.role === 'teacher' || user.role === 'admin';
       const isStudent = user.role === 'student';
       const studentGroupId = isStudent ? user.groupId : null;
 
       const activeStudents = useMemo(() => {
         return students.filter(s => s.status === 'active' || !s.status);
       }, [students]);
-
-      // Filter subjects based on role
-      const availableSubjects = useMemo(() => {
-        if (isAdmin) return subjects;
-        if (isTeacher) return subjects.filter(s => s.teacherId === user.id);
-        return []; // Students don't manage subjects
-      }, [subjects, user.id, isAdmin, isTeacher]);
-
-      // Filter groups based on role (Curator logic would go here, simplified for now)
-      const availableGroups = useMemo(() => {
-        if (isAdmin) return groups;
-        if (isTeacher) {
-          // Teacher sees groups where they teach OR are curator (simplified: where they teach)
-          const teacherSubjectGroupIds = subjects.filter(s => s.teacherId === user.id).map(s => s.groupId);
-          return groups.filter(g => teacherSubjectGroupIds.includes(g.id));
-        }
-        if (isStudent && studentGroupId) {
-          return groups.filter(g => g.id === studentGroupId);
-        }
-        return [];
-      }, [groups, subjects, user.id, isAdmin, isTeacher, isStudent, studentGroupId]);
 
       const filteredStudents = useMemo(() => {
         if (!selectedGroup) return [];
@@ -2760,8 +2695,15 @@
 
       const filteredSubjects = useMemo(() => {
         if (!selectedGroup) return [];
-        return availableSubjects.filter(s => s.groupId === parseInt(selectedGroup));
-      }, [selectedGroup, availableSubjects]);
+        return subjects.filter(s => s.groupId === parseInt(selectedGroup));
+      }, [selectedGroup, subjects]);
+
+      const availableGroups = useMemo(() => {
+        if (isStudent && studentGroupId) {
+          return groups.filter(g => g.id === studentGroupId);
+        }
+        return groups;
+      }, [groups, isStudent, studentGroupId]);
 
       const archivedStudents = useMemo(() => {
         return students.filter(s => s.status === 'archived' || s.status === 'academic');
@@ -3023,27 +2965,8 @@
       };
 
       const handleVerifiedSwitch = (verifiedUser) => {
-        // Clear current user state to show Landing Page
-        setUser(null);
-        localStorage.removeItem('currentUser');
-        // Then login as new user after a small delay to allow render
-        setTimeout(() => {
-            handleLogin(verifiedUser);
-        }, 100);
-      };
-      
-      // Helper to handle login from verified switch
-      const handleLogin = (userData) => {
-        setUser(userData);
-        localStorage.setItem('currentUser', JSON.stringify(userData));
-        
-        const sessions = getFromStorage('savedSessions', []);
-        if (!sessions.find(s => s.id === userData.id)) {
-          const sessionData = { ...userData };
-          sessions.push(sessionData);
-          saveToStorage('savedSessions', sessions);
-          setSavedSessions(sessions);
-        }
+        onSwitchAccount(verifiedUser);
+        setPendingSwitchUser(null);
       };
 
       return (
@@ -3057,7 +2980,7 @@
           <Sidebar 
             activeTab={activeTab} 
             setActiveTab={setActiveTab} 
-            isTeacher={isTeacher || isAdmin} 
+            isTeacher={isTeacher} 
             user={user}
             onLogout={onLogout}
             onShowSettings={() => setShowSettings(true)}
@@ -3095,14 +3018,14 @@
                       </select>
                     </div>
                     <div className="flex items-end gap-2">
-                      {(isTeacher || isAdmin) && selectedSubject && (
+                      {isTeacher && selectedSubject && (
                         <button onClick={() => setIsAddColumnModalOpen(true)} className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all shadow-md">+ Оценка</button>
                       )}
-                      {(isTeacher || isAdmin) && (
+                      {isTeacher && (
                         <button onClick={handleEditExport} className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md" disabled={!selectedSubject}>📊 Экспорт</button>
                       )}
                     </div>
-                    {(isTeacher || isAdmin) && selectedGroup && (
+                    {isTeacher && selectedGroup && (
                       <div className="flex items-end"><button onClick={() => setIsScheduleModalOpen(true)} className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all shadow-md">📅 Расписание</button></div>
                     )}
                   </div>
@@ -3112,7 +3035,7 @@
                       {currentGradeColumns.map(column => (
                         <div key={column.id} className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-800 px-3 py-2 rounded-lg text-sm flex items-center gap-2 border border-blue-200">
                           <span>{column.name}</span><span className="text-blue-600 font-medium">(вес: {column.weight})</span>
-                          {(isTeacher || isAdmin) && (<button onClick={() => handleRemoveColumn(column.id)} className="text-red-500 hover:text-red-700 font-bold">×</button>)}
+                          {isTeacher && (<button onClick={() => handleRemoveColumn(column.id)} className="text-red-500 hover:text-red-700 font-bold">×</button>)}
                         </div>
                       ))}
                     </div>
@@ -3142,13 +3065,13 @@
                               <td className="px-4 py-3 font-medium text-gray-800 sticky left-0 bg-inherit z-10">{student.name}</td>
                               {currentGradeColumns.map(column => (
                                 <td key={column.id} className="px-4 py-3 text-center">
-                                  {(isTeacher || isAdmin) ? (
+                                  {isTeacher ? (
                                     <input type="number" min="0" max={column.maxScore} value={grades[`${student.id}-${column.id}`] || ''} onChange={(e) => handleGradeChange(student.id, column.id, e.target.value)} className={`w-16 text-center px-2 py-1 border rounded-lg transition-all ${getGradeColor(grades[`${student.id}-${column.id}`], column.maxScore)} focus:ring-2 focus:ring-green-500`} placeholder="-" />
                                   ) : (<span className={getGradeColor(grades[`${student.id}-${column.id}`], column.maxScore)}>{grades[`${student.id}-${column.id}`] || '-'}</span>)}
                                 </td>
                               ))}
                               <td className={`px-4 py-3 text-center ${getAttendanceColor(student.id)}`}>
-                                {(isTeacher || isAdmin) ? (
+                                {isTeacher ? (
                                   <button onClick={() => handleAttendanceClick(student)} className="px-3 py-1 rounded-lg text-sm font-medium transition-colors hover:bg-black/10">
                                     {attendance[student.id]?.status === 'present' ? (attendance[student.id]?.reason ? absenceReasons.find(r => r.value === attendance[student.id].reason)?.label : '✓ Был') : '✗ Отметить'}
                                   </button>
@@ -3177,7 +3100,7 @@
               <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-purple-500">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold text-gray-800">📅 Расписание занятий</h2>
-                  {(isTeacher || isAdmin) && (<button onClick={() => setIsScheduleModalOpen(true)} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md">✏️ Редактировать</button>)}
+                  {isTeacher && (<button onClick={() => setIsScheduleModalOpen(true)} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md">✏️ Редактировать</button>)}
                 </div>
                 {(selectedGroup || isStudent) ? (
                   <>
@@ -3227,7 +3150,7 @@
                     ) : (
                       <div className="text-center py-12 text-gray-500">
                         <p className="text-lg mb-2">Расписание пустое</p>
-                        {(isTeacher || isAdmin) && (<button onClick={() => setIsScheduleModalOpen(true)} className="text-blue-600 hover:text-blue-800 font-semibold">Добавить расписание</button>)}
+                        {isTeacher && (<button onClick={() => setIsScheduleModalOpen(true)} className="text-blue-600 hover:text-blue-800 font-semibold">Добавить расписание</button>)}
                       </div>
                     )}
                   </>
@@ -3244,7 +3167,7 @@
               <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-orange-500">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold text-gray-800">📰 Новости</h2>
-                  {(isTeacher || isAdmin) && (<button onClick={() => setIsNewsModalOpen(true)} className="bg-gradient-to-r from-orange-600 to-yellow-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-orange-700 hover:to-yellow-700 transition-all shadow-md">✏️ Управление</button>)}
+                  {isTeacher && (<button onClick={() => setIsNewsModalOpen(true)} className="bg-gradient-to-r from-orange-600 to-yellow-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-orange-700 hover:to-yellow-700 transition-all shadow-md">✏️ Управление</button>)}
                 </div>
                 {news.length > 0 ? (
                   <div className="space-y-4">
@@ -3277,16 +3200,16 @@
               </div>
             )}
 
-            {activeTab === 'management' && isAdmin && (
+            {activeTab === 'management' && isTeacher && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <ManagementPanel type="students" items={activeStudents} onAdd={handleAddStudent} onRemove={handleRemoveStudent} onUpdateStatus={handleStatusChange} groups={groups} students={students} subjects={subjects} bellSchedules={bellSchedules} teachers={teachers} onOpenBellSchedule={() => setIsBellScheduleModalOpen(true)} onOpenAddStudent={() => setIsAddStudentModalOpen(true)} />
                 <ManagementPanel type="groups" items={groups} onAdd={handleAddGroup} onRemove={handleRemoveGroup} groups={groups} students={students} subjects={subjects} bellSchedules={bellSchedules} teachers={teachers} onOpenBellSchedule={() => setIsBellScheduleModalOpen(true)} onOpenAddStudent={() => setIsAddStudentModalOpen(true)} />
-                <ManagementPanel type="subjects" items={subjects} onAdd={handleAddSubject} onRemove={handleRemoveSubject} groups={groups} students={students} subjects={subjects} bellSchedules={bellSchedules} teachers={teachers} onOpenBellSchedule={() => setIsBellScheduleModalOpen(true)} onOpenAddStudent={() => setIsAddStudentModalOpen(true)} onOpenAddSubject={() => setIsAddSubjectModalOpen(true)} />
+                <ManagementPanel type="subjects" items={subjects} onAdd={handleAddSubject} onRemove={handleRemoveSubject} groups={groups} students={students} subjects={subjects} bellSchedules={bellSchedules} teachers={teachers} onOpenBellSchedule={() => setIsBellScheduleModalOpen(true)} onOpenAddStudent={() => setIsAddStudentModalOpen(true)} />
                 <ManagementPanel type="bellSchedules" items={bellSchedules} onAdd={() => {}} onRemove={handleDeleteBellSchedule} groups={groups} students={students} subjects={subjects} bellSchedules={bellSchedules} teachers={teachers} onOpenBellSchedule={() => setIsBellScheduleModalOpen(true)} onOpenAddStudent={() => setIsAddStudentModalOpen(true)} />
               </div>
             )}
 
-            {activeTab === 'archive' && (isTeacher || isAdmin) && (
+            {activeTab === 'archive' && isTeacher && (
               <ArchivePanel archivedStudents={archivedStudents} onRestore={handleRestoreStudent} groups={groups} />
             )}
           </div>
@@ -3368,8 +3291,8 @@
 
     // Main App Component
     const App = () => {
-      const [view, setView] = useState('landing'); // 'landing', 'login', 'register', 'dashboard'
       const [user, setUser] = useState(null);
+      const [showRegister, setShowRegister] = useState(false);
       const [allUsers, setAllUsers] = useState([]);
       const [savedSessions, setSavedSessions] = useState([]);
 
@@ -3377,7 +3300,6 @@
         const savedUser = localStorage.getItem('currentUser');
         if (savedUser) {
           setUser(JSON.parse(savedUser));
-          setView('dashboard');
         }
         const users = getUsers();
         setAllUsers(users);
@@ -3397,7 +3319,6 @@
       const handleLogin = (userData) => {
         setUser(userData);
         localStorage.setItem('currentUser', JSON.stringify(userData));
-        setView('dashboard');
         
         const sessions = getFromStorage('savedSessions', []);
         if (!sessions.find(s => s.id === userData.id)) {
@@ -3411,13 +3332,11 @@
       const handleLogout = () => {
         setUser(null);
         localStorage.removeItem('currentUser');
-        setView('landing');
       };
 
       const handleSwitchAccount = (userData) => {
         setUser(userData);
         localStorage.setItem('currentUser', JSON.stringify(userData));
-        setView('dashboard');
       };
 
       const handleRemoveSession = (sessionId) => {
@@ -3453,19 +3372,15 @@
         setUser(updatedUser);
         updateUserInStorage(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        // Update in allUsers state
         setAllUsers(getUsers());
       };
 
-      if (view === 'landing') {
-        return <LandingPage onLoginClick={() => setView('login')} onRegisterClick={() => setView('register')} />;
-      }
-
-      if (view === 'login') {
-        return <LoginPage onLogin={handleLogin} onBack={() => setView('landing')} />;
-      }
-
-      if (view === 'register') {
-        return <RegisterPage onRegister={() => {}} onBack={() => setView('landing')} />;
+      if (!user) {
+        if (showRegister) {
+          return <RegisterPage onRegister={() => {}} onShowLogin={() => setShowRegister(false)} />;
+        }
+        return <LoginPage onLogin={handleLogin} onShowRegister={() => setShowRegister(true)} />;
       }
 
       return <Dashboard user={user} onLogout={handleLogout} onSwitchAccount={handleSwitchAccount} allUsers={allUsers} savedSessions={savedSessions} onRemoveSession={handleRemoveSession} onDeleteAccount={handleDeleteAccount} onDeleteStudent={handleDeleteStudent} onUpdateUser={handleUpdateUser} />;
