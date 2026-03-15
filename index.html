@@ -1,45 +1,30 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="utf-8">
-    <meta name="description" content="Регистрация">
-    <title>ГАПОУ СО "КМТ"</title>
-    <link rel="stylesheet" href="css/auth.css">
+    <meta name="description" content="Главная страница">
+    <title>Учебный журнал	ГАПОУ СО "КМТ"</title>
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <div class="overlay">
-      <div class="window">
-        <div class="header">
-          <p>Регистрация</p>
-        </div>
-        <form>
-					<label>Придумайте логин</label>
-					<input type="text" placeholder="Логин" minleght="3" maxleght="64"></input><br>
-          <label>Фамилия</label>
-          <input type="text" placeholder="Иванов"></input><br>
-					<label>Имя</label>
-					<input type="text" placeholder="Иван"></input><br>
-					<label>Отчество</label>
-					<input type="text" placeholder="Иванович"></input><br>
-					<label>Введите почту</label>
-					<input type="email" placeholder="examle@example.com" minleght="5" maxleght="256"></input><br>
-					<label>Введите номер телефона</label>
-					<input type="tel" placeholder="+7 (999) 000-00-00" inputmode="numeric" pattern="[0-9]*" minleght="3" maxleght="24"><br>
-					<label>Выберите своё учебное заведение</label><br>
-					<select >
-						<option selected hidden></option>
-						<option>1</option>
-						<option>2</option>
-					</select><br>
-					<label>Придумайте пароль</label>
-					<input type="password" placeholder="••••••••" autocomplete="current-password" minlegth="8" maxleght="128"></input><br>
-					<label>Подтвердите пароль</label>
-					<input type="password" placeholder="••••••••" minleght="8" maxleght="128"></input><br>
-        </form>
-				<div class="auth">
-					<p>Есть аккаунт? <a href="login.html" class="link">Войти</a></p>
-				</div>
-      </div>
-    </div>
+		<div class="header">
+    	📓Электронный журнал
+			<a href="auth/login.html" class="btn">Войти</a>
+		</div><br><hr><br>
+    <table border="1">
+      <thead align="center">
+        <tr>
+          <th width="200px">ФИО</th>
+          <th width="60px">Оценки</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Гордеев Иван</td>
+          <td align="center">5</td>
+        </tr>
+      </tbody>
+    </table>
+    <script src="js/main.js"></script>
   </body>
 </html>
