@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Страница входа">
+    <title>Учебный журнал</title>
+    <link rel="stylesheet" href="../css/auth.css">
+  </head>
+  <body>
+		<div class="header">
+    	📓Электронный журнал
+			<a href="../index.html" class="btn">Вернуться назад</a>
+		</div><br><hr><br>
+    <div class="modal-overlay">
+      <div class="modal-window">
+        <div class="auth">
+          <b>Вход</b>
+        </div><br>
+        <form action="" method="post">
+          <label>Введите логин</label>
+          <input type="text" name="login" id="login" placeholder="Логин" minlength="3" maxlength="64" value=""><br>
+          <label>Введите пароль</label>
+          <input type="password" name="password" id="password" placeholder="••••••••" minlength="8" maxlength="128" value=""><br>
+					<button type="submit">Войти</button>
+        </form>
+        <div class="registration">
+          Нет аккаунта? <a href="register.html" class="link">Зарегистрироваться</a>
+        </div>
+      </div>
+    </div>
+    <script scr="js/auth.js"></script>
+  </body>
+</html>
