@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Регистрация">
+    <title>ГАПОУ СО "КМТ"</title>
+    <link rel="stylesheet" href="auth.css">
+  </head>
+  <body>
+    <div class="overlay">
+      <div class="window">
+        <div class="header">
+          <p>Регистрация</p>
+        </div>
+        <form>
+					<label>Придумайте логин</label>
+					<input type="text" placeholder="Логин" minleght="3" maxleght="64"></input><br>
+          <label>Фамилия</label>
+          <input type="text" placeholder="Иванов"></input><br>
+					<label>Имя</label>
+					<input type="text" placeholder="Иван"></input><br>
+					<label>Отчество</label>
+					<input type="text" placeholder="Иванович"></input><br>
+					<label>Введите почту</label>
+					<input type="email" placeholder="examle@example.com" minleght="5" maxleght="256"></input><br>
+					<label>Введите номер телефона</label>
+					<input type="tel" placeholder="+7 (999) 000-00-00" inputmode="numeric" pattern="[0-9]*" minleght="3" maxleght="24"><br>
+					<label>Придумайте пароль</label>
+					<input type="password" placeholder="••••••••" autocomplete="current-password" minlegth="8" maxleght="128"></input><br>
+					<label>Подтвердите пароль</label>
+					<input type="password" placeholder="••••••••" minleght="8" maxleght="128"></input><br>
+        </form>
+				<div class="auth">
+					<p>Есть аккаунт? <a href="login.html">Войти</a></p>
+				</div>
+      </div>
+    </div>
+  </body>
+</html>
