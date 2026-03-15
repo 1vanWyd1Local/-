@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="Страница регистрации">
+		<title>Учебный журнал</title>
+		<link rel="stylesheet" href="../css/auth.css">
+	</head>
+	<body>
+		<div class="header">
+			📓Электронный журнал
+			<a href="../index.html" class="btn">Вернуться назад</a>
+		</div><br><hr><br>
+		<div class="modal-overlay">
+			<div class="modal-window">
+				<div class="auth">
+					<b>Регистрация</b>
+				</div><br>
+				<form action="" method="post">
+					<label>Придумайте логин</label>
+					<input type="text" name="p" id="login" placeholder="Логин" minlength="3" maxlength="64" required><br>
+					<label>Введите Фамилию</label>
+					<input type="text" name="p" id="surname" placeholder="Иванов" required><br>
+					<label>Введите Имя</label>
+					<input type="text" name="p" id="firstname" placeholder="Иван" required><br>
+					<label>Введите Отчество</label>
+					<input type="text" name="p" id="patronymic" placeholder="Иванович (Необязательно)" ><br>
+					<label>Введите почту</label>
+					<input type="email" name="p" id="email" placeholder="example@example.com (Необязательно)" minlength="5" maxlength="256"><br>
+					<label>Введите номер телефона</label>
+					<input type="tel" placeholder="+7 (999) 000-00-00" pattern="^\+7\s?\(?\d{3}\)?\s?\d{3}-?\d{2}-?\d{2}$" minleght="3" required><br>
+					<label>Придумайте пароль</label>
+					<input type="password" name="p" id="password" placeholder="••••••••" minlength="8" maxlength="128" required><br>
+					<label>Подтвердите пароль</label>
+					<input type="password" name="p" id="vpassword" placeholder="••••••••" minlength="8" maxlength="128" required><br>
+					<label>Выберите учебное заведение</label>
+					<select>
+						<option disabled selected hidden></option>
+						<option>ГАПОУ СО «Красноуфимский аграрный колледж»</option>
+						<option>ГАПОУ СО «Красноуфимский многопрофильный техникум»</option>
+						<option>ГБПОУ СО «Красноуфимский педагогический колледж»</option>
+					</select><br>
+
+					<label>
+						<input type="checkbox" required>
+						Вы подтверждаете что ознакомились с политикой кондефициальности?
+					</label><br>
+
+					<button type="submit">Зарегистрироваться</button>
+				</form>
+				<div class="login">
+					Есть аккаунт? <a href="login.html" class="link">Вход</a>
+				</div>
+			</div>
+		</div>
+		<script scr="js/auth.js"></script>
+	</body>
+</html>
